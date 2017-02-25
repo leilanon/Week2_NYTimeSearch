@@ -1,4 +1,4 @@
-package lin.leila.week2_nytimesearch;
+package lin.leila.week2_nytimesearch.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import lin.leila.week2_nytimesearch.Article;
+import lin.leila.week2_nytimesearch.R;
 
 /**
  * Created by Leila on 2017/2/22.
