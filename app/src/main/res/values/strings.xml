@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="hint">Enter search query</string>
     <string name="search">Search</string>
-    <string name="title_activity_article">ArticleActivity</string>
+    <string name="title_activity_article">Article</string>
+    <string name="title_activity_setting">Setting</string>
     <string name="saveSetting">Save</string>
 </resources>

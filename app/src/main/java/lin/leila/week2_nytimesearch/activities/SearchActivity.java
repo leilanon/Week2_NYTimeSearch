@@ -3,14 +3,15 @@ package lin.leila.week2_nytimesearch.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -34,11 +35,9 @@ import lin.leila.week2_nytimesearch.R;
 
 public class SearchActivity extends AppCompatActivity {
 
-    EditText etQuery;
     GridView gvResults;
-    Button btnSearch;
+    String strQuery;
 
-    int page = 0;
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
     @Override
@@ -52,9 +51,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void setupViews() {
-        etQuery = (EditText) findViewById(R.id.etQuery);
         gvResults = (GridView) findViewById(R.id.gvResults);
-        btnSearch = (Button) findViewById(R.id.btnSearch);
         articles = new ArrayList<>();
         adapter = new ArticleArrayAdapter(this, articles);
         gvResults.setAdapter(adapter);
@@ -87,29 +84,43 @@ public class SearchActivity extends AppCompatActivity {
                 return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
-
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter.clear();
-                onArticleSearch(0);
-            }
-        });
     }
     public void loadNextDataFromApi(int offset) {
-
         onArticleSearch(offset);
-        // Send an API request to retrieve appropriate paginated data
-        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
-        //  --> Deserialize and construct new model objects from the API response
-        //  --> Append the new data objects to the existing set of items inside the array of items
-        //  --> Notify the adapter of the new items made with `notifyDataSetChanged()`
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+
+            public boolean onQueryTextSubmit(String query) {
+                adapter.clear();
+                strQuery = query;
+                onArticleSearch(0);
+                // perform query here
+                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
+                // see https://code.google.com/p/android/issues/detail?id=24599
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -124,13 +135,15 @@ public class SearchActivity extends AppCompatActivity {
             Intent i = new Intent(SearchActivity.this, SettingActivity.class);
             startActivity(i);
             return true;
+        } else {
+
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     public void onArticleSearch(int page) {
-        String query = etQuery.getText().toString();
+        String query = strQuery;
         String strOldDate;
         String strNewDate;
         String strDate = "";
@@ -191,7 +204,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 //                Log.d("DEBUG", response.toString());
-//                super.onSuccess(statusCode, headers, response);
                 JSONArray articleJsonResults = null;
 
                 try {

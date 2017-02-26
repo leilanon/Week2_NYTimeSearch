@@ -10,12 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
-
-import lin.leila.week2_nytimesearch.Article;
-import lin.leila.week2_nytimesearch.R;
 
 /**
  * Created by Leila on 2017/2/22.
@@ -55,7 +52,7 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
         String thumbnail = article.getThumbNail();
 
         if (!TextUtils.isEmpty(thumbnail)) {
-            Picasso.with(getContext()).load(thumbnail).into(imageView);
+            Glide.with(getContext()).load(thumbnail).into(imageView);
         }
 
         return convertView;
