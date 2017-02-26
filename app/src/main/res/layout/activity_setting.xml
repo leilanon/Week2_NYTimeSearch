@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:text="Begin Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:id="@+id/tvBegin"
+        android:textSize="@dimen/itemTextSize" />
+
+    <TextView
+        android:text="News Desk Values"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvDesk"
+        android:textSize="@dimen/itemTextSize" />
+
+    <TextView
+        android:text="Sort Order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:id="@+id/tvSort"
+        android:layout_below="@+id/etDate"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/itemTextSize" />
+
+    <CheckBox
+        android:text="Arts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDesk"
+        android:layout_alignRight="@+id/etDate"
+        android:layout_alignEnd="@+id/etDate"
+        android:id="@+id/chkArts"
+        android:layout_alignLeft="@+id/etDate"
+        android:layout_alignStart="@+id/etDate" />
+
+    <CheckBox
+        android:text="Fashion and Style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkArts"
+        android:layout_alignLeft="@+id/chkArts"
+        android:layout_alignStart="@+id/chkArts"
+        android:id="@+id/chkStyle"
+        android:layout_alignRight="@+id/chkArts"
+        android:layout_alignEnd="@+id/chkArts" />
+
+    <CheckBox
+        android:text="Sports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkStyle"
+        android:layout_alignLeft="@+id/chkStyle"
+        android:layout_alignStart="@+id/chkStyle"
+        android:id="@+id/chkSports"
+        android:layout_alignRight="@+id/chkStyle"
+        android:layout_alignEnd="@+id/chkStyle" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/etDate"
+        android:layout_below="@+id/tvBegin"
+        android:layout_centerHorizontal="true"
+        tools:text="1/1/2000" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spSort"
+        android:layout_below="@+id/tvSort"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chkSports"
+        android:layout_alignRight="@+id/tvSort"
+        android:layout_alignEnd="@+id/tvSort"
+        android:layout_marginTop="39dp"
+        android:id="@+id/btnSave"
+        android:text="@string/saveSetting" />
+</RelativeLayout>

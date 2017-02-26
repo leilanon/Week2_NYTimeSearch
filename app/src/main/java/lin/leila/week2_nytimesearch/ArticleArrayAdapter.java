@@ -1,4 +1,4 @@
-package lin.leila.week2_nytimesearch.adapter;
+package lin.leila.week2_nytimesearch;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
