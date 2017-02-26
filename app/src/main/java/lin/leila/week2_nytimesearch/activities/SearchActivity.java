@@ -91,6 +91,7 @@ public class SearchActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                adapter.clear();
                 onArticleSearch(0);
             }
         });
