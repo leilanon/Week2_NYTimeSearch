@@ -38,6 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     GridView gvResults;
     Button btnSearch;
 
+    int page = 0;
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
     @Override
@@ -86,8 +87,17 @@ public class SearchActivity extends AppCompatActivity {
                 return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onArticleSearch(0);
+            }
+        });
     }
     public void loadNextDataFromApi(int offset) {
+
+        onArticleSearch(offset);
         // Send an API request to retrieve appropriate paginated data
         //  --> Send the request including an offset value (i.e `page`) as a query parameter.
         //  --> Deserialize and construct new model objects from the API response
@@ -118,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onArticleSearch(View view) {
+    public void onArticleSearch(int page) {
         String query = etQuery.getText().toString();
         String strOldDate;
         String strNewDate;
@@ -166,7 +176,7 @@ public class SearchActivity extends AppCompatActivity {
 
         RequestParams params = new RequestParams();
         params.put("api-key", "25a4ca6ca4ac4df59d15d24198818d9b");
-        params.put("page", 0);
+        params.put("page", page);
         params.put("q", query);
         params.put("begin_date", strDate);
         params.put("sort", strSort);
@@ -186,6 +196,7 @@ public class SearchActivity extends AppCompatActivity {
                 try {
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
                     adapter.addAll(Article.fromJSONArray(articleJsonResults));
+                    adapter.notifyDataSetChanged();
 //                    Log.d("DEBUG", articles.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
